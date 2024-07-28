@@ -1,34 +1,31 @@
+import { EventTypes } from '../core/constant'
+
 export interface Options {
   reportUrl: string
-  uid: string
+  appid: string
+  afterSend?:() => void
 }
 
-export enum ReportType {
-  PV = 'pv',
-  EVENT = 'event',
-  ERROR = 'error',
-  // 用户主动上报，常用在组件内上报错误
-  CUSTOM = 'custom',
-  DURATION = 'duration',
-};
-
 export interface PageInfo {
+  userAgent: string
   uid: string
+  appid: string
   appName: string
+  sdk: string,
   url: string
   time: number
   screen: string
-  userAgent: string
 }
 
-export interface ReportData {
-  data: any,
-  type: ReportType,
-  sdk: string,
+export interface EventT {
+  data?: any,
+  type: EventTypes,
+  eventId: string,
+  callback?: (e: Event) => void
 }
 
-export enum RouteType {
-  PUSH = 'pushState',
-  REPLACE = 'replaceState',
-  HASH = 'hashchange'
+export type AnyObj<T = any> = {
+  [key: string]: T
 }
+
+export type AnyFun = (...args: any[]) => any;

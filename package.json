@@ -1,6 +1,6 @@
 {
-  "name": "web-tracing",
-  "version": "1.0.0",
+  "name": "cq-web-tracing",
+  "version": "1.1.1",
   "description": "",
   "main": "./dist/index.cjs.js",
   "module": "./dist/index.mjs.js",
@@ -19,7 +19,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "前端通用埋点"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/linglongmi/cq-web-tracking.git",
+    "directory": "cq-web-tracking"
+  },
+  "author": "linglongmi",
   "license": "ISC"
 }
