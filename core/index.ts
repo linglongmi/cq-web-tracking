@@ -14,7 +14,7 @@ export default class Tracking {
   constructor(options: Options) {
     const afterSend = options.afterSend || (() => {});
     initOptions(options.appid, options.reportUrl, afterSend);
-    
+
     window.history.pushState = wrap('pushState');
     window.history.replaceState = wrap('replaceState');
     // 初始化事件收集
@@ -97,13 +97,14 @@ export default class Tracking {
   }
   private initErrorInfo() {
     // 监听一般的语法错误或者运行错误
-    window.addEventListener("error", (e) => {
-      this.event.addEvent({
+    let self = this;
+    window.onerror = function(event) {
+      self.event.addEvent({
+        event,
         reportType: ReportType.ERROR,
-        eventType: EventTypes.ERROR,
-        msg: e.message,
+        eventType: EventTypes.RESOURCESERROR,
       });
-    });
+    }
     // 监听promise抛出的错误
     window.addEventListener("unhandledrejection", (e) => {
       this.event.addEvent({
@@ -113,13 +114,12 @@ export default class Tracking {
       });
     });
     // 监听静态资源报错
-    let self = this;
-    window.onerror = function(event) {
-      self.event.addEvent({
-        event,
+    window.addEventListener("error", (e) => {
+      this.event.addEvent({
         reportType: ReportType.ERROR,
-        eventType: EventTypes.RESOURCESERROR,
+        eventType: EventTypes.ERROR,
+        msg: e.message,
       });
-    }
+    }, { capture: true });
   }
 }
